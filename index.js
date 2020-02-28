@@ -8,7 +8,7 @@ const exists = promisify(fs.exists);
 const readdir = promisify(fs.readdir);
 const readFile = promisify(fs.readFile);
 
-const projectDirectory = process.argv[2] || '/Users/dxc/Development/APPCBK/ws1/FINANZAS';
+const projectDirectory = process.argv[2];
 
 function isDirectory(pathname) {
     return fs.lstatSync(pathname).isDirectory();
