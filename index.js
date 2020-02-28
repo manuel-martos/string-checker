@@ -23,19 +23,19 @@ function validateName(name) {
     return namePattern.test(name);
 } 
 
-function recursiveValidation(jsonObject) {
+function recursiveValidation(jsonObject, pathname) {
     try {
         if (jsonObject === undefined || jsonObject === null) {
             return;
         } else if (jsonObject['@_name'] !== undefined) {
             if (!validateName(jsonObject['@_name'])) {
-                console.log(` -> Invalid identifier found: ${jsonObject['@_name']}`);
+                console.log(` -> Invalid identifier found: ${jsonObject['@_name']} (pathname: ${pathname})`);
             }
             return;
         } else if (typeof jsonObject === 'object') {
             for (item in jsonObject) {
                 if (item !== '__proto__') {
-                    recursiveValidation(jsonObject[item]);
+                    recursiveValidation(jsonObject[item], pathname);
                 }
             }
         }
@@ -67,8 +67,7 @@ function recursiveValidation(jsonObject) {
                                         if (isFile(resourcePath) && path.extname(resourcePath).toLowerCase() === '.xml') {
                                             const fileContent = await readFile(resourcePath, 'utf8');
                                             const jsonFile = parser.parse(fileContent, { ignoreAttributes: false }); 
-                                            //console.log(`Analizing ${resourcePath}...`);
-                                            recursiveValidation(jsonFile);
+                                            recursiveValidation(jsonFile, resourcePath);
                                         }
                                     }
                                 }
