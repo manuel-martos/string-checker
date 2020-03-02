@@ -8,4 +8,4 @@ Just must have a valid NodeJS and NPM installation.
 
 # Usage
 
-> nom run start [project root folder]
+> npm run start [project root folder]
